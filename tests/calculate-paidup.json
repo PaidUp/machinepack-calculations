@@ -1,0 +1,16 @@
+{
+  "machine": "calculate-paidup",
+  "expectations": [
+    {
+      "using": {
+        "originalPrice" : 100,
+        "stripePercent" : 2.9,
+        "stripeFlat" : 0.30,
+        "paidUpFee" : 5,
+        "discount" : 0
+      },
+      "outcome": "success",
+      "output": { "owedPrice": 105, "discount": 0 }
+    }
+  ]
+}
