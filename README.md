@@ -12,7 +12,44 @@ Calculate product price for customers
 ## Installation &nbsp; [![NPM version](https://badge.fury.io/js/machinepack-product-price-calculations.svg)](http://badge.fury.io/js/machinepack-schedulegenerate) [![Build Status](https://travis-ci.org/mikermcneil/machinepack-schedulegenerate.png?branch=master)](https://travis-ci.org/mikermcneil/machinepack-schedulegenerate)
 
 ```sh
+$ npm install -g machinepack
+```
+
+```sh
 $ npm install machinepack-product-price-calculations
+```
+
+##Info
+
+```sh
+$ mp info
+```
+
+##Test
+
+```sh
+$ npm test
+```
+
+##Exec
+
+### Customer pay option1: processing no, paidup yes
+```sh
+$ mp exec calculate-paidup
+```
+
+### Customer pay option2: processing no, paidup no
+```sh
+$ mp exec calculate
+```
+### Customer pay option3: processing yes, paidup yes
+```sh
+$ mp exec calculate-processing-paidup
+```
+
+### Customer pay option4: processing yes, paidup no
+```sh
+$ mp exec calculate-processing
 ```
 
 ## Usage
