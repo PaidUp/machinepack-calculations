@@ -1,3 +1,5 @@
+'use strict'
+
 module.exports = {
 
   friendlyName: 'calculate-paidup',
@@ -65,7 +67,7 @@ module.exports = {
     var sp = inputs.stripePercent / 100;
     var sf = inputs.stripeFlat;
     var pu = inputs.paidUpFee / 100;
-    
+
     var ow = (op * (1 + pu));
 
     // Return an object containing myLength and the secretCode
