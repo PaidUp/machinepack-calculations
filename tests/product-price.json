@@ -1,5 +1,5 @@
 {
-  "machine": "calculate",
+  "machine": "product-price",
   "expectations": [
     {
       "using": {
@@ -9,7 +9,7 @@
         "paidUpFee" : 5,
         "discount" : 0,
         "payProcessing" : false,
-        "payCollect" : true
+        "payCollecting" : true
       },
       "outcome": "success",
       "output": { "owedPrice": 105, "discount": 0 }
@@ -22,7 +22,7 @@
         "paidUpFee" : 5,
         "discount" : 0,
         "payProcessing" : false,
-        "payCollect" : false
+        "payCollecting" : false
       },
       "outcome": "success",
       "output": { "owedPrice": 100, "discount": 0 }
@@ -35,7 +35,7 @@
         "paidUpFee" : 5,
         "discount" : 0,
         "payProcessing" : true,
-        "payCollect" : true
+        "payCollecting" : true
       },
       "outcome": "success",
       "output": { "owedPrice": 108.45, "discount": 0 }
@@ -48,7 +48,7 @@
         "paidUpFee" : 5,
         "discount" : 0,
         "payProcessing" : true,
-        "payCollect" : false
+        "payCollecting" : false
       },
       "outcome": "success",
       "output": { "owedPrice": 103.29, "discount": 0 }

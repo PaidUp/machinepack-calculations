@@ -58,7 +58,7 @@ module.exports = {
       description : 'This parameter define if user pay stripe processing',
       required : true
     },
-    payCollect : {
+    payCollecting : {
       example : true,
       description : 'This parameter define if user pay PadUp processing',
       required : true
@@ -98,7 +98,7 @@ module.exports = {
     let pu = inputs.paidUpFee / 100;
 
     let processing = inputs.payProcessing;
-    let collect = inputs.payCollect;
+    let collect = inputs.payCollecting;
 
     let ow = 0;
 
