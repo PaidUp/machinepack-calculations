@@ -1,5 +1,21 @@
 'use strict'
 
+/**
+ * User Pays
+ * +===========+==============+===========+
+ * |  Option   |  Processing  |  PaidUp   |
+ * |===========|==============|===========|
+ * |  Option 1 |     NO       |    YES    |
+ * |-----------|--------------|-----------|
+ * |  Option 2 |     NO       |     NO    |
+ * |-----------|--------------|-----------|
+ * |  Option 3 |     YES      |     YES   |
+ * |-----------|--------------|-----------|
+ * |  Option 4 |     YES      |     NO    |
+ * +--------------------------------------+
+ *
+ */
+
 module.exports = {
 
   friendlyName: 'calculate',
@@ -36,6 +52,18 @@ module.exports = {
       required : true
     }
 
+    ,
+    payProcessing : {
+      example : false,
+      description : 'This parameter define if user pay stripe processing',
+      required : true
+    },
+    payCollect : {
+      example : true,
+      description : 'This parameter define if user pay PadUp processing',
+      required : true
+    }
+
   },
 
   defaultExit: 'success',
@@ -62,14 +90,35 @@ module.exports = {
 
     // ...
 
-    var di = inputs.discount / 100;
-    var op = inputs.originalPrice * (1 - di);
-    var div = inputs.originalPrice - op;
-    var sp = inputs.stripePercent / 100;
-    var sf = inputs.stripeFlat;
-    var pu = inputs.paidUpFee / 100;
+    let di = inputs.discount / 100;
+    let op = inputs.originalPrice * (1 - di);
+    let div = inputs.originalPrice - op;
+    let sp = inputs.stripePercent / 100;
+    let sf = inputs.stripeFlat;
+    let pu = inputs.paidUpFee / 100;
 
-    var ow = op;
+    let processing = inputs.payProcessing;
+    let collect = inputs.payCollect;
+
+    let ow = 0;
+
+    if(!processing && collect){
+
+      ow = (op * (1 + pu));
+
+    }else if(!processing && !collect){
+
+      ow = op;
+
+    }else if(processing && collect){
+
+      ow = ((op + sf) / (1 - sp - (sp * pu))) + (op * pu);
+
+    }else if(processing && !collect){
+
+      ow = ((op - op * pu) + sf) / (1 - sp - sp * pu) + (op * pu);
+
+    }
 
     // Return an object containing myLength and the secretCode
     return exits.success({
