@@ -1,7 +1,7 @@
 {
-  "name": "machinepack-product-price-calculations",
-  "version": "0.1.2",
-  "description": "Generate product price for PaidUp Orders",
+  "name": "machinepack-calculations",
+  "version": "0.2.0",
+  "description": "Calculations for PaidUp",
   "scripts": {
     "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
   },
@@ -21,13 +21,10 @@
     "test-machinepack-mocha": "^2.0.0"
   },
   "machinepack": {
-    "friendlyName": "ProductPriceCalculations",
+    "friendlyName": "machinepackCalculations",
     "machineDir": "machines/",
     "machines": [
-      "calculate",
-      "calculate-processing-paidup",
-      "calculate-paidup",
-      "calculate-processing"
+      "product-price"
     ]
   }
 }

@@ -7,10 +7,51 @@
         "stripePercent" : 2.9,
         "stripeFlat" : 0.30,
         "paidUpFee" : 5,
-        "discount" : 0
+        "discount" : 0,
+        "payProcessing" : false,
+        "payCollect" : true
+      },
+      "outcome": "success",
+      "output": { "owedPrice": 105, "discount": 0 }
+    },
+    {
+      "using": {
+        "originalPrice" : 100,
+        "stripePercent" : 2.9,
+        "stripeFlat" : 0.30,
+        "paidUpFee" : 5,
+        "discount" : 0,
+        "payProcessing" : false,
+        "payCollect" : false
       },
       "outcome": "success",
       "output": { "owedPrice": 100, "discount": 0 }
+    },
+    {
+      "using": {
+        "originalPrice" : 100,
+        "stripePercent" : 2.9,
+        "stripeFlat" : 0.30,
+        "paidUpFee" : 5,
+        "discount" : 0,
+        "payProcessing" : true,
+        "payCollect" : true
+      },
+      "outcome": "success",
+      "output": { "owedPrice": 108.45, "discount": 0 }
+    },
+    {
+      "using": {
+        "originalPrice" : 100,
+        "stripePercent" : 2.9,
+        "stripeFlat" : 0.30,
+        "paidUpFee" : 5,
+        "discount" : 0,
+        "payProcessing" : true,
+        "payCollect" : false
+      },
+      "outcome": "success",
+      "output": { "owedPrice": 103.29, "discount": 0 }
     }
   ]
 }

@@ -1,10 +1,10 @@
 
 <h1>
   <a href="http://node-machine.org" title="Node-Machine public registry"><img alt="node-machine logo" title="Node-Machine Project" src="http://node-machine.org/images/machine-anthropomorph-for-white-bg.png" width="50" /></a>
-  machinepack-product-price-calculations
+  machinepack-calculations
 </h1>
 
-### [Docs](http://node-machine.org/machinepack-product-price-calculations) &nbsp; [Browse other machines](http://node-machine.org/machinepacks) &nbsp;  [FAQ](http://node-machine.org/implementing/FAQ)  &nbsp;  [Newsgroup](https://groups.google.com/forum/?hl=en#!forum/node-machine)
+### [Docs](http://node-machine.org/machinepack-calculations) &nbsp; [Browse other machines](http://node-machine.org/machinepacks) &nbsp;  [FAQ](http://node-machine.org/implementing/FAQ)  &nbsp;  [Newsgroup](https://groups.google.com/forum/?hl=en#!forum/node-machine)
 
 Calculate product price for customers
 
@@ -16,7 +16,7 @@ $ npm install -g machinepack
 ```
 
 ```sh
-$ npm install machinepack-product-price-calculations
+$ npm install machinepack-calculations
 ```
 
 ##Info
@@ -35,22 +35,9 @@ $ npm test
 
 ### Customer pay option1: processing no, paidup yes
 ```sh
-$ mp exec calculate-paidup
+$ mp exec product-price
 ```
 
-### Customer pay option2: processing no, paidup no
-```sh
-$ mp exec calculate
-```
-### Customer pay option3: processing yes, paidup yes
-```sh
-$ mp exec calculate-processing-paidup
-```
-
-### Customer pay option4: processing yes, paidup no
-```sh
-$ mp exec calculate-processing
-```
 
 ## Usage
 
