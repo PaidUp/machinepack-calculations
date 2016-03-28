@@ -138,7 +138,6 @@ module.exports = {
       owedPrice: Math.round(ow * 100) / 100,
       discount: Math.round(div * 100) / 100
     }
-    console.log(result)
     return exits.success(result);
 
   }
