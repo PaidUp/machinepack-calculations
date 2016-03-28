@@ -12,7 +12,7 @@
         "payCollecting" : true
       },
       "outcome": "success",
-      "output": { "owedPrice": 105, "discount": 0 }
+      "output": {"owedPrice": 105, "discount": 0, "originalPrice": 100, "totalFee": 8.34}
     },
     {
       "using": {
@@ -25,7 +25,7 @@
         "payCollecting" : false
       },
       "outcome": "success",
-      "output": { "owedPrice": 100, "discount": 0 }
+      "output": { "owedPrice": 100, "discount": 0, "originalPrice": 100, "totalFee": 8.2 }
     },
     {
       "using": {
@@ -38,7 +38,7 @@
         "payCollecting" : true
       },
       "outcome": "success",
-      "output": { "owedPrice": 108.45, "discount": 0 }
+      "output": { "owedPrice": 108.45, "discount": 0, "originalPrice": 100, "totalFee": 8.45 }
     },
     {
       "using": {
@@ -51,7 +51,8 @@
         "payCollecting" : false
       },
       "outcome": "success",
-      "output": { "owedPrice": 103.29, "discount": 0 }
+      "output": { "owedPrice": 103.29,
+        "discount": 0, "originalPrice": 100, "totalFee": 8.3 }
     }
   ]
 }

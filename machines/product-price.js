@@ -76,6 +76,8 @@ module.exports = {
 
     success: {
       example:  {
+        originalPrice: 300,
+        totalFee: 12,
         owedPrice: 343.44,
         discount : 12
       }
@@ -120,11 +122,24 @@ module.exports = {
 
     }
 
+    function calculateFee(){
+      let fixOw = Math.round(ow * 100) / 100;
+      let feePaidUp = op * pu;
+      let feeStripe = (fixOw * sp) + sf;
+
+
+      return Math.round((feePaidUp + feeStripe) * 100) / 100;
+    }
+
     // Return an object containing myLength and the secretCode
-    return exits.success({
+    let result = {
+      originalPrice: inputs.originalPrice,
+      totalFee: calculateFee(),
       owedPrice: Math.round(ow * 100) / 100,
       discount: Math.round(div * 100) / 100
-    });
+    }
+    console.log(result)
+    return exits.success(result);
 
   }
 
