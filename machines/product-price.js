@@ -50,9 +50,7 @@ module.exports = {
       example : 20,
       description : 'Percentage to discount at original price',
       required : true
-    }
-
-    ,
+    },
     payProcessing : {
       example : false,
       description : 'This parameter define if user pay stripe processing',
@@ -79,7 +77,9 @@ module.exports = {
         originalPrice: 300,
         totalFee: 12,
         owedPrice: 343.44,
-        discount : 12
+        discount : 12,
+        feePaidUp : 8.12,
+        feeStripe : 3.23
       }
     }
   },
@@ -123,21 +123,28 @@ module.exports = {
     }
 
     function calculateFee(){
-      let fixOw = Math.round(ow * 100) / 100;
-      let feePaidUp = op * pu;
-      let feeStripe = (fixOw * sp) + sf;
+      let feePaidUp = Math.round((op * pu) * 100) / 100;
+      let feeStripe = Math.round(((ow * sp) + sf) * 100) / 100;
 
-
-      return Math.round((feePaidUp + feeStripe) * 100) / 100;
+      let fees = {
+        total : Math.round((feePaidUp + feeStripe) * 100) / 100,
+        paidup : feePaidUp,
+        stripe: feeStripe
+      }
+      return fees;
     }
 
+    let fees = calculateFee();
     // Return an object containing myLength and the secretCode
     let result = {
       originalPrice: inputs.originalPrice,
-      totalFee: calculateFee(),
+      totalFee: fees.total,
+      feePaidUp: fees.paidup,
+      feeStripe: fees.stripe,
       owedPrice: Math.round(ow * 100) / 100,
       discount: Math.round(div * 100) / 100
     }
+
     return exits.success(result);
 
   }
