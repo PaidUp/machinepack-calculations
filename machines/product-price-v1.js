@@ -86,57 +86,67 @@ module.exports = {
 
   fn: function (inputs, exits) {
 
-    let discountInput = inputs.discount / 100;
-    let stripePercentInput = inputs.stripePercent / 100;
-    let stripeFlatInput = inputs.stripeFlat;
-    let paidUpFeeInput = inputs.paidUpFee / 100;
+    /**
+     * Module Dependencies
+     */
 
+    // ...
+
+    let di = inputs.discount / 100;
+    let op = inputs.originalPrice * (1 - di);
+    let div = inputs.originalPrice - op;
+    let sp = inputs.stripePercent / 100;
+    let sf = inputs.stripeFlat;
+    let pu = inputs.paidUpFee / 100;
 
     let processing = inputs.payProcessing;
     let collect = inputs.payCollecting;
 
-    var newPrice = inputs.originalPrice;
-    var basePrice = 0;
-
-    var result = {
-      originalPrice: inputs.originalPrice,
-      totalFee: 0,
-      feePaidUp: 0,
-      feeStripe: round((round(newPrice - round(newPrice * discountInput)) * stripePercentInput) + stripeFlatInput),
-      owedPrice: round(newPrice - round(newPrice * discountInput)),
-      discount: round(newPrice * discountInput)
-    }
-
-
+    let ow = 0;
 
     if(!processing && collect){
 
-      basePrice = result.owedPrice / (1 + paidUpFeeInput);
+      ow = (op * (1 + pu));
 
     }else if(!processing && !collect){
 
-      basePrice = result.owedPrice;
+      ow = op;
 
     }else if(processing && collect){
 
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput)-stripeFlatInput) /
-        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput))
+      ow = ((op + sf) / (1 - sp - (sp * pu))) + (op * pu);
 
     }else if(processing && !collect){
 
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput)-stripeFlatInput) /
-        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput))
+      ow = ((op - op * pu) + sf) / (1 - sp - sp * pu) + (op * pu);
 
     }
 
-    function round (num){
-      return Math.round(num * 100) / 100
+    function calculateFee(){
+      let feePaidUp = Math.round((op * pu) * 100) / 100;
+      let feeStripe = Math.round(((ow * sp) + sf) * 100) / 100;
+
+      let fees = {
+        total : Math.round((feePaidUp + feeStripe) * 100) / 100,
+        paidup : feePaidUp,
+        stripe: feeStripe
+      }
+      return fees;
     }
 
-    result.feePaidUp = round(basePrice * paidUpFeeInput)
-    result.totalFee = round(result.feeStripe + result.feePaidUp);
+    let fees = calculateFee();
+    // Return an object containing myLength and the secretCode
+    let result = {
+      originalPrice: inputs.originalPrice,
+      totalFee: fees.total,
+      feePaidUp: fees.paidup,
+      feeStripe: fees.stripe,
+      owedPrice: Math.round(ow * 100) / 100,
+      discount: Math.round(div * 100) / 100
+    }
 
     return exits.success(result);
+
   }
 
 };

@@ -24,7 +24,8 @@
     "friendlyName": "machinepackCalculations",
     "machineDir": "machines/",
     "machines": [
-      "product-price"
+      "product-price",
+      "product-price-v1"
     ]
   }
 }
