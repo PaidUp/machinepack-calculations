@@ -18,7 +18,7 @@
 
 module.exports = {
 
-  friendlyName: 'calculate',
+  friendlyName: 'product-price-v2',
 
   description: 'Calculate final price when user does not assume any fee.',
 
@@ -74,6 +74,8 @@ module.exports = {
 
     success: {
       example:  {
+        version: 'v2',
+        basePrice: 200,
         originalPrice: 300,
         totalFee: 12,
         owedPrice: 343.44,
@@ -99,6 +101,7 @@ module.exports = {
     var basePrice = 0;
 
     var result = {
+      version: 'v2',
       originalPrice: inputs.originalPrice,
       totalFee: 0,
       feePaidUp: 0,
@@ -132,6 +135,8 @@ module.exports = {
     function round (num){
       return Math.round(num * 100) / 100
     }
+
+    result.basePrice = basePrice;
 
     result.feePaidUp = round(basePrice * paidUpFeeInput)
     result.totalFee = round(result.feeStripe + result.feePaidUp);

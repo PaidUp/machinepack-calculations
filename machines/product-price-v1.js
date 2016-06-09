@@ -18,7 +18,7 @@
 
 module.exports = {
 
-  friendlyName: 'calculate',
+  friendlyName: 'product-price-v1',
 
   description: 'Calculate final price when user does not assume any fee.',
 

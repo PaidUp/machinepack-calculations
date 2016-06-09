@@ -1,23 +1,23 @@
 {
-  "machine": "product-price",
+  "machine": "product-price-v1",
   "expectations": [
     {
       "using": {
-        "originalPrice" : 105,
+        "originalPrice" : 100,
         "stripePercent" : 2.9,
         "stripeFlat" : 0.30,
         "paidUpFee" : 5,
-        "discount" : 10,
+        "discount" : 0,
         "payProcessing" : false,
         "payCollecting" : true
       },
       "outcome": "success",
-      "output": {"owedPrice": 94.5,
-        "discount": 10.50,
-        "originalPrice": 105,
-        "totalFee": 8.54,
-        "feePaidUp": 4.50,
-        "feeStripe": 3.04}
+      "output": {"owedPrice": 105,
+        "discount": 0,
+        "originalPrice": 100,
+        "totalFee": 8.34,
+        "feePaidUp": 5,
+        "feeStripe": 3.35}
     },
     {
       "using": {
@@ -25,54 +25,54 @@
         "stripePercent" : 2.9,
         "stripeFlat" : 0.30,
         "paidUpFee" : 5,
-        "discount" : 10,
+        "discount" : 0,
         "payProcessing" : false,
         "payCollecting" : false
       },
       "outcome": "success",
-      "output": { "owedPrice": 90,
-        "discount": 10,
+      "output": { "owedPrice": 100,
+        "discount": 0,
         "originalPrice": 100,
-        "totalFee": 7.41,
-        "feePaidUp": 4.5,
-        "feeStripe": 2.91
+        "totalFee": 8.2,
+        "feePaidUp": 5,
+        "feeStripe": 3.2
       }
     },
     {
       "using": {
-        "originalPrice" : 40,
+        "originalPrice" : 100,
         "stripePercent" : 2.9,
         "stripeFlat" : 0.30,
         "paidUpFee" : 5,
-        "discount" : 10,
+        "discount" : 0,
         "payProcessing" : true,
         "payCollecting" : true
       },
       "outcome": "success",
-      "output": { "owedPrice": 36,
-        "discount": 4,
-        "originalPrice": 40,
-        "totalFee": 2.99,
-        "feePaidUp": 1.65,
-        "feeStripe": 1.34}
+      "output": { "owedPrice": 108.45,
+        "discount": 0,
+        "originalPrice": 100,
+        "totalFee": 8.45,
+        "feePaidUp": 5,
+        "feeStripe": 3.45}
     },
     {
       "using": {
-        "originalPrice" : 103.29,
+        "originalPrice" : 100,
         "stripePercent" : 2.9,
         "stripeFlat" : 0.30,
         "paidUpFee" : 5,
-        "discount" : 10,
+        "discount" : 0,
         "payProcessing" : true,
         "payCollecting" : false
       },
       "outcome": "success",
-      "output": { "owedPrice": 92.96,
-        "discount": 10.33,
-        "originalPrice": 103.29,
-        "totalFee": 8.5,
-        "feePaidUp": 4.5,
-        "feeStripe": 3.0}
+      "output": { "owedPrice": 103.29,
+        "discount": 0,
+        "originalPrice": 100,
+        "totalFee": 8.3,
+        "feePaidUp": 5,
+        "feeStripe": 3.3}
     }
   ]
 }
