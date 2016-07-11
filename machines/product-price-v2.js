@@ -106,7 +106,7 @@ module.exports = {
       totalFee: 0,
       feePaidUp: 0,
       feeStripe: round((round(newPrice - round(newPrice * discountInput)) * stripePercentInput) + stripeFlatInput),
-      owedPrice: round(newPrice - round(newPrice * discountInput)),
+      owedPrice: round(newPrice - (newPrice * discountInput)),
       discount: round(newPrice * discountInput)
     }
 
