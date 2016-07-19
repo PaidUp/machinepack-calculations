@@ -25,41 +25,50 @@ module.exports = {
   extendedDescription: 'Calculate final price when user does not assume any fee.',
 
   inputs: {
-
-    originalPrice : {
-      example : 200.23,
-      description : 'Price base for calculate owed price.',
-      required : true
+    type: {
+      example: 'bank',
+      description: 'Type of entity.',
+      required: false
     },
-    stripePercent : {
-      example : 2.9,
-      description : 'Percentage for calculate stripe fee.',
-      required : true
+    capAmount: {
+      example: '456',
+      description: 'Amount limit for choose a kind of calculation.',
+      required: false
     },
-    stripeFlat : {
-      example : 0.30,
-      description : 'Amount base to calcualte stripe fee.',
-      required : true
+    originalPrice: {
+      example: 200.23,
+      description: 'Price base for calculate owed price.',
+      required: true
     },
-    paidUpFee : {
-      example : 5,
-      description : 'Percentage to calculate Paid Up Fee.',
-      required : true
+    stripePercent: {
+      example: 2.9,
+      description: 'Percentage for calculate stripe fee.',
+      required: true
     },
-    discount : {
-      example : 20,
-      description : 'Percentage to discount at original price',
-      required : true
+    stripeFlat: {
+      example: 0.30,
+      description: 'Amount base to calcualte stripe fee.',
+      required: true
     },
-    payProcessing : {
-      example : false,
-      description : 'This parameter define if user pay stripe processing',
-      required : true
+    paidUpFee: {
+      example: 5,
+      description: 'Percentage to calculate Paid Up Fee.',
+      required: true
     },
-    payCollecting : {
-      example : true,
-      description : 'This parameter define if user pay PadUp processing',
-      required : true
+    discount: {
+      example: 20,
+      description: 'Percentage to discount at original price',
+      required: true
+    },
+    payProcessing: {
+      example: false,
+      description: 'This parameter define if user pay stripe processing',
+      required: true
+    },
+    payCollecting: {
+      example: true,
+      description: 'This parameter define if user pay PadUp processing',
+      required: true
     }
 
   },
@@ -73,75 +82,40 @@ module.exports = {
     },
 
     success: {
-      example:  {
+      example: {
         version: 'v2',
         basePrice: 200,
         originalPrice: 300,
         totalFee: 12,
         owedPrice: 343.44,
-        discount : 12,
-        feePaidUp : 8.12,
-        feeStripe : 3.23
+        discount: 12,
+        feePaidUp: 8.12,
+        feeStripe: 3.23
       }
     }
   },
 
   fn: function (inputs, exits) {
 
-    let discountInput = inputs.discount / 100;
-    let stripePercentInput = inputs.stripePercent / 100;
-    let stripeFlatInput = inputs.stripeFlat;
-    let paidUpFeeInput = inputs.paidUpFee / 100;
+    console.log('log... ' , inputs.capAmount)
 
+    var calculatePriceV2 = require('../api/v2/calculate-price');
 
-    let processing = inputs.payProcessing;
-    let collect = inputs.payCollecting;
-
-    var newPrice = inputs.originalPrice;
-    var basePrice = 0;
-
-    var result = {
-      version: 'v2',
-      originalPrice: inputs.originalPrice,
-      totalFee: 0,
-      feePaidUp: 0,
-      feeStripe: round((round(newPrice - round(newPrice * discountInput)) * stripePercentInput) + stripeFlatInput),
-      owedPrice: round(newPrice - (newPrice * discountInput)),
-      discount: round(newPrice * discountInput)
+    if (inputs.type && (inputs.type !== 'bank' && inputs.type !== 'card')) {
+      return exits.error({ description: 'type must be `bank` or `card`' });
     }
 
-
-
-    if(!processing && collect){
-
-      basePrice = result.owedPrice / (1 + paidUpFeeInput);
-
-    }else if(!processing && !collect){
-
-      basePrice = result.owedPrice;
-
-    }else if(processing && collect){
-
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput)-stripeFlatInput) /
-        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput))
-
-    }else if(processing && !collect){
-
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput)-stripeFlatInput) /
-        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput))
-
+    if (inputs.type === 'bank') {
+      if (!inputs.capAmount || isNaN(parseFloat(inputs.capAmount))) {
+        return exits.error({ description: 'capAmount is require and must be a number' });
+      }
+      else {
+        return calculatePriceV2.bank(inputs, exits);
+      }
     }
-
-    function round (num){
-      return parseFloat((Math.round(num * 100000) / 100000).toFixed(2))
+    else {
+      return calculatePriceV2.card(inputs, exits);
     }
-
-    result.basePrice = basePrice;
-
-    result.feePaidUp = round(basePrice * paidUpFeeInput)
-    result.totalFee = round(result.feeStripe + result.feePaidUp);
-
-    return exits.success(result);
   }
 
 };
