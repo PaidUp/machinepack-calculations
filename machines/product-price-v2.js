@@ -101,11 +101,11 @@ module.exports = {
 
     var calculatePriceV2 = require('../api/v2/calculate-price');
 
-    if (inputs.type && (inputs.type !== 'bank' && inputs.type !== 'card')) {
+    if (inputs.type && (inputs.type !== 'bank_account' && inputs.type !== 'card')) {
       return exits.error({ description: 'type must be `bank` or `card`' });
     }
 
-    if (inputs.type === 'bank') {
+    if (inputs.type === 'bank_account') {
       if (!inputs.capAmount || isNaN(parseFloat(inputs.capAmount))) {
         return exits.error({ description: 'capAmount is require and must be a number' });
       }
