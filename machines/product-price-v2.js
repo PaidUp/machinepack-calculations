@@ -97,12 +97,10 @@ module.exports = {
 
   fn: function (inputs, exits) {
 
-    console.log('log... ' , inputs.capAmount)
-
     var calculatePriceV2 = require('../api/v2/calculate-price');
 
     if (inputs.type && (inputs.type !== 'bank_account' && inputs.type !== 'card')) {
-      return exits.error({ description: 'type must be `bank` or `card`' });
+      return exits.error({ description: 'type must be `bank_account` or `card`' });
     }
 
     if (inputs.type === 'bank_account') {

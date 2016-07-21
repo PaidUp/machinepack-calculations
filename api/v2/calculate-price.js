@@ -37,15 +37,15 @@ function card(inputs, exits) {
       basePrice = result.owedPrice;
     }
     else if (processing && collect) {
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput))
+      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
+        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput)
     }
     else if (processing && !collect) {
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput))
+      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
+        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput)
     }
 
-    result.basePrice = basePrice;
+    result.basePrice = round(basePrice);
 
     result.feePaidUp = round(basePrice * paidUpFeeInput)
     result.totalFee = round(result.feeStripe + result.feePaidUp);
@@ -63,17 +63,17 @@ function bank(inputs, exits) {
 
   try {
     let capAmount = inputs.capAmount;    
-    let newPrice = inputs.originalPrice;    
-    let applyCapAmount = newPrice > capAmount;
-    let discountInput = inputs.discount / 100;
-    let stripePercentInput = applyCapAmount ? 0 : inputs.stripePercent / 100;
+    let newPrice = inputs.originalPrice;   
+    let discountInput = inputs.discount / 100;    
+    let owedPrice = round(newPrice - (newPrice * discountInput)); 
+    let applyCapAmount = owedPrice > capAmount;
+    let stripePercentInput = applyCapAmount ? 0 : (inputs.stripePercent / 100);
     let stripeFlatInput = applyCapAmount ? inputs.stripeFlat : 0;
     let paidUpFeeInput = inputs.paidUpFee / 100;
     let processing = inputs.payProcessing;
     let collect = inputs.payCollecting;
 
     let basePrice = 0;
-
 
     let feeStripe = applyCapAmount ? 5 : round((newPrice - (newPrice * discountInput)) * stripePercentInput)
 
@@ -83,7 +83,7 @@ function bank(inputs, exits) {
       totalFee: 0,
       feePaidUp: 0,
       feeStripe: feeStripe,
-      owedPrice: round(newPrice - (newPrice * discountInput)),
+      owedPrice: owedPrice,
       discount: round(newPrice * discountInput)
     }
 
@@ -94,15 +94,17 @@ function bank(inputs, exits) {
       basePrice = result.owedPrice;
     }
     else if (processing && collect) {
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput))
+      console.log('processing && collect')
+      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
+        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput);
+        console.log('processing && collect: ', basePrice);
     }
     else if (processing && !collect) {
-      basePrice = round((result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput))
+      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
+        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput)
     }
 
-    result.basePrice = basePrice;
+    result.basePrice = round(basePrice);
 
     result.feePaidUp = round(basePrice * paidUpFeeInput)
     result.totalFee = round(result.feeStripe + result.feePaidUp);
@@ -111,9 +113,6 @@ function bank(inputs, exits) {
   } catch (e) {
     return exits.error({ description: e })
   }
-
-
-
 }
 
 module.exports = {
