@@ -107,12 +107,6 @@ function bank(inputs, exits) {
 
     result.feePaidUp = round(basePrice * paidUpFeeInput)
 
-    console.log('basePrice: ', basePrice)
-    console.log('paidUpFeeInput: ', paidUpFeeInput)
-    console.log('result.feePaidUp: ', result.feePaidUp)
-    
-    
-
     result.totalFee = round(result.feeStripe + result.feePaidUp);
 
     return exits.success(result);
