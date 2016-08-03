@@ -62,10 +62,10 @@ function card(inputs, exits) {
 function bank(inputs, exits) {
 
   try {
-    let capAmount = inputs.capAmount;    
-    let newPrice = inputs.originalPrice;   
-    let discountInput = inputs.discount / 100;    
-    let owedPrice = round(newPrice - (newPrice * discountInput)); 
+    let capAmount = inputs.capAmount;
+    let newPrice = inputs.originalPrice;
+    let discountInput = inputs.discount / 100;
+    let owedPrice = round(newPrice - (newPrice * discountInput));
     let stripePercentInput = (inputs.stripePercent / 100);
     let stripeFlatInput = inputs.stripeFlat;
     let paidUpFeeInput = inputs.paidUpFee / 100;
