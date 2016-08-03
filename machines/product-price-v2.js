@@ -26,12 +26,12 @@ module.exports = {
 
   inputs: {
     type: {
-      example: 'bank',
+      example: 'bank_account',
       description: 'Type of entity.',
       required: false
     },
     capAmount: {
-      example: '456',
+      example: 5,
       description: 'Amount limit for choose a kind of calculation.',
       required: false
     },

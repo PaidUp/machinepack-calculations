@@ -66,16 +66,17 @@ function bank(inputs, exits) {
     let newPrice = inputs.originalPrice;   
     let discountInput = inputs.discount / 100;    
     let owedPrice = round(newPrice - (newPrice * discountInput)); 
-    let applyCapAmount = owedPrice > capAmount;
-    let stripePercentInput = applyCapAmount ? 0 : (inputs.stripePercent / 100);
-    let stripeFlatInput = applyCapAmount ? inputs.stripeFlat : 0;
+    let stripePercentInput = (inputs.stripePercent / 100);
+    let stripeFlatInput = inputs.stripeFlat;
     let paidUpFeeInput = inputs.paidUpFee / 100;
     let processing = inputs.payProcessing;
     let collect = inputs.payCollecting;
 
     let basePrice = 0;
 
-    let feeStripe = applyCapAmount ? 5 : round((newPrice - (newPrice * discountInput)) * stripePercentInput)
+
+    let tmpProcessing = round((round(newPrice - round(newPrice * discountInput)) * stripePercentInput) + stripeFlatInput)
+    let feeStripe = tmpProcessing < capAmount ? tmpProcessing : capAmount;
 
     var result = {
       version: 'v2',
@@ -94,10 +95,8 @@ function bank(inputs, exits) {
       basePrice = result.owedPrice;
     }
     else if (processing && collect) {
-      console.log('processing && collect')
       basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
         (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput);
-        console.log('processing && collect: ', basePrice);
     }
     else if (processing && !collect) {
       basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
@@ -107,6 +106,13 @@ function bank(inputs, exits) {
     result.basePrice = round(basePrice);
 
     result.feePaidUp = round(basePrice * paidUpFeeInput)
+
+    console.log('basePrice: ', basePrice)
+    console.log('paidUpFeeInput: ', paidUpFeeInput)
+    console.log('result.feePaidUp: ', result.feePaidUp)
+    
+    
+
     result.totalFee = round(result.feeStripe + result.feePaidUp);
 
     return exits.success(result);
