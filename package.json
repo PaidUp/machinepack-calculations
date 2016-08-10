@@ -1,6 +1,6 @@
 {
   "name": "machinepack-calculations",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Calculations for PaidUp",
   "scripts": {
     "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
