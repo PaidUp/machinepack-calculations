@@ -104,7 +104,7 @@ module.exports = {
     }
 
     if (inputs.type === 'bank_account') {
-      if (!inputs.capAmount || isNaN(parseFloat(inputs.capAmount))) {
+      if (isNaN(parseFloat(inputs.capAmount))) {
         return exits.error({ description: 'capAmount is require and must be a number' });
       }
       else {
