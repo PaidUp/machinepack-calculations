@@ -50,6 +50,16 @@ module.exports = {
       description: 'Amount base to calcualte stripe fee.',
       required: true
     },
+    stripeAchPercent: {
+      example: 2.9,
+      description: 'Percentage for calculate stripe fee.',
+      required: false
+    },
+    stripeAchFlat: {
+      example: 0.30,
+      description: 'Amount base to calcualte stripe fee.',
+      required: false
+    },
     paidUpFee: {
       example: 5,
       description: 'Percentage to calculate Paid Up Fee.',
@@ -107,6 +117,13 @@ module.exports = {
       if (isNaN(parseFloat(inputs.capAmount))) {
         return exits.error({ description: 'capAmount is require and must be a number' });
       }
+      if (!inputs.stripeAchPercent) {
+        return exits.error({ description: 'stripeAchPercent is require and must be a number' });
+      }
+      if (!inputs.stripeAchFlat) {
+        return exits.error({ description: 'stripeAchFlat is require and must be a number' });
+      }
+      
       else {
         return calculatePriceV2.bank(inputs, exits);
       }

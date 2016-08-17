@@ -68,6 +68,8 @@ function bank(inputs, exits) {
     let owedPrice = round(newPrice - (newPrice * discountInput));
     let stripePercentInput = (inputs.stripePercent / 100);
     let stripeFlatInput = inputs.stripeFlat;
+    let stripeAchPercentInput = (inputs.stripeAchPercent / 100);
+    let stripeAchFlatInput = inputs.stripeAchFlat;
     let paidUpFeeInput = inputs.paidUpFee / 100;
     let processing = inputs.payProcessing;
     let collect = inputs.payCollecting;
@@ -75,7 +77,7 @@ function bank(inputs, exits) {
     let basePrice = 0;
 
 
-    let tmpProcessing = round((round(newPrice - round(newPrice * discountInput)) * stripePercentInput) + stripeFlatInput)
+    let tmpProcessing = round((round(newPrice - round(newPrice * discountInput)) * stripeAchPercentInput) + stripeAchFlatInput)
     let feeStripe = tmpProcessing < capAmount ? tmpProcessing : capAmount;
 
     var result = {
@@ -95,6 +97,9 @@ function bank(inputs, exits) {
       basePrice = result.owedPrice;
     }
     else if (processing && collect) {
+      let numerator = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput);
+      let denominator = (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput);
+
       basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
         (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput);
     }
