@@ -117,10 +117,10 @@ module.exports = {
       if (isNaN(parseFloat(inputs.capAmount))) {
         return exits.error({ description: 'capAmount is require and must be a number' });
       }
-      if (!inputs.stripeAchPercent) {
+      if (isNaN(parseFloat(inputs.stripeAchPercent)) ){
         return exits.error({ description: 'stripeAchPercent is require and must be a number' });
       }
-      if (!inputs.stripeAchFlat) {
+      if (isNaN(parseFloat(inputs.stripeAchFlat))) {
         return exits.error({ description: 'stripeAchFlat is require and must be a number' });
       }
       
