@@ -65,11 +65,6 @@ module.exports = {
       description: 'Percentage to calculate Paid Up Fee.',
       required: true
     },
-    paidUpFlat: {
-      example: 15,
-      description: 'Flat amount to calculate Paid Up Fee.',
-      required: false
-    },
     discount: {
       example: 20,
       description: 'Percentage to discount at original price',
@@ -85,6 +80,7 @@ module.exports = {
       description: 'This parameter define if user pay PadUp processing',
       required: true
     }
+
   },
 
   defaultExit: 'success',
@@ -115,10 +111,6 @@ module.exports = {
 
     if (inputs.type && (inputs.type !== 'bank_account' && inputs.type !== 'card')) {
       return exits.error({ description: 'type must be `bank_account` or `card`' });
-    }
-
-    if(!inputs.paidUpFlat){
-      inputs.paidUpFlat = 0;
     }
 
     if (inputs.type === 'bank_account') {

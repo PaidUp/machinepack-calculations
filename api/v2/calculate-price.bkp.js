@@ -12,7 +12,6 @@ function card(inputs, exits) {
     let stripePercentInput = inputs.stripePercent / 100;
     let stripeFlatInput = inputs.stripeFlat;
     let paidUpFeeInput = inputs.paidUpFee / 100;
-    let paidUpFlatInput = inputs.paidUpFlat;
 
 
     let processing = inputs.payProcessing;
@@ -26,16 +25,16 @@ function card(inputs, exits) {
       originalPrice: inputs.originalPrice,
       totalFee: 0,
       feePaidUp: 0,
-      feeStripe: 0,//round((round(newPrice - round(newPrice * discountInput)) * stripePercentInput) + stripeFlatInput),
+      feeStripe: round((round(newPrice - round(newPrice * discountInput)) * stripePercentInput) + stripeFlatInput),
       owedPrice: round(newPrice - (newPrice * discountInput)),
       discount: round(newPrice * discountInput)
     }
 
     if (!processing && collect) {
-      result.basePrice = round((result.owedPrice - paidUpFlatInput) / (1 + paidUpFeeInput));
+      basePrice = result.owedPrice / (1 + paidUpFeeInput)
     }
     else if (!processing && !collect) {
-      basePrice = round(result.owedPrice);
+      basePrice = result.owedPrice;
     }
     else if (processing && collect) {
       basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
@@ -46,9 +45,9 @@ function card(inputs, exits) {
         (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput)
     }
 
-    //result.basePrice = round(basePrice);
-    result.feeStripe = round(result.owedPrice * stripePercentInput + stripeFlatInput)
-    result.feePaidUp = round(result.basePrice * paidUpFeeInput + paidUpFlat)
+    result.basePrice = round(basePrice);
+
+    result.feePaidUp = round(basePrice * paidUpFeeInput)
     result.totalFee = round(result.feeStripe + result.feePaidUp);
 
     return exits.success(result);
