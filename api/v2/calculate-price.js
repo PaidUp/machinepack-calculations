@@ -35,29 +35,24 @@ function card(inputs, exits) {
       result.basePrice = round((result.owedPrice - paidUpFlatInput) / (1 + paidUpFeeInput));
     }
     else if (!processing && !collect) {
-      basePrice = round(result.owedPrice);
+      result.basePrice = round(result.owedPrice);
     }
     else if (processing && collect) {
-      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput)
+      result.basePrice = round((result.owedPrice - result.owedPrice * stripePercentInput - paidUpFlatInput - stripeFlatInput) / (1 + paidUpFeeInput));
     }
     else if (processing && !collect) {
-      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput)
+      result.basePrice = round(result.owedPrice - result.owedPrice * stripePercentInput - stripeFlatInput);
     }
 
     //result.basePrice = round(basePrice);
     result.feeStripe = round(result.owedPrice * stripePercentInput + stripeFlatInput)
-    result.feePaidUp = round(result.basePrice * paidUpFeeInput + paidUpFlat)
+    result.feePaidUp = round(result.basePrice * paidUpFeeInput + paidUpFlatInput)
     result.totalFee = round(result.feeStripe + result.feePaidUp);
 
     return exits.success(result);
   } catch (e) {
     return exits.error({ description: e })
   }
-
-
-
 }
 
 function bank(inputs, exits) {
@@ -74,44 +69,36 @@ function bank(inputs, exits) {
     let paidUpFeeInput = inputs.paidUpFee / 100;
     let processing = inputs.payProcessing;
     let collect = inputs.payCollecting;
+    let paidUpFlatInput = inputs.paidUpFlat;
 
-    let basePrice = 0;
-
-
-    let tmpProcessing = round((round(newPrice - round(newPrice * discountInput)) * stripeAchPercentInput) + stripeAchFlatInput)
-    let feeStripe = tmpProcessing < capAmount ? tmpProcessing : capAmount;
 
     var result = {
       version: 'v2',
       originalPrice: inputs.originalPrice,
       totalFee: 0,
       feePaidUp: 0,
-      feeStripe: feeStripe,
+      feeStripe: 0,
       owedPrice: owedPrice,
       discount: round(newPrice * discountInput)
     }
 
     if (!processing && collect) {
-      basePrice = result.owedPrice / (1 + paidUpFeeInput)
+      result.basePrice = round((result.owedPrice - paidUpFlatInput) / (1 + paidUpFeeInput));
     }
     else if (!processing && !collect) {
-      basePrice = result.owedPrice;
+      result.basePrice = round(result.owedPrice);
     }
     else if (processing && collect) {
-      let numerator = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput);
-      let denominator = (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput);
-
-      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (1 + paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput);
+      result.basePrice = round((result.owedPrice - result.owedPrice * stripeAchPercentInput - paidUpFlatInput - stripeAchFlatInput) / (1 - paidUpFeeInput));
     }
     else if (processing && !collect) {
-      basePrice = (result.owedPrice * (1 - stripePercentInput - stripePercentInput * paidUpFeeInput) - stripeFlatInput) /
-        (paidUpFeeInput - paidUpFeeInput * stripePercentInput - paidUpFeeInput * paidUpFeeInput * stripePercentInput + 1 - paidUpFeeInput)
+      result.basePrice = round(result.owedPrice - result.owedPrice * stripeAchPercentInput - stripeAchFlatInput);
     }
 
-    result.basePrice = round(basePrice);
+    let tmpProcessing = round(result.owedPrice * stripeAchPercentInput + stripeAchFlatInput)
+    result.feeStripe = tmpProcessing < capAmount ? tmpProcessing : capAmount;
 
-    result.feePaidUp = round(basePrice * paidUpFeeInput)
+    result.feePaidUp = round(result.basePrice * paidUpFeeInput + paidUpFlatInput)
 
     result.totalFee = round(result.feeStripe + result.feePaidUp);
 
