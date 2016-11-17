@@ -142,6 +142,9 @@
         "feePaidUp": 50,
         "feeStripe": 5}
     },
+
+
+
     {
       "using": {
         "originalPrice" : 1000,
@@ -154,7 +157,7 @@
         "capAmount": 5,
         "stripeAchPercent": 0.8,
         "stripeAchFlat": 0,
-        "paidUpFlat": 0,
+        "paidUpFlat": 10,
         "type": "bank_account"
       },
       "outcome": "success",

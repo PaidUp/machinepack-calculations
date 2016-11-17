@@ -89,10 +89,18 @@ function bank(inputs, exits) {
       result.basePrice = round(result.owedPrice);
     }
     else if (processing && collect) {
-      result.basePrice = round((result.owedPrice - result.owedPrice * stripeAchPercentInput - paidUpFlatInput - stripeAchFlatInput) / (1 - paidUpFeeInput));
+      if(result.owedPrice <= (capAmount / stripeAchPercentInput)){
+        result.basePrice = round((result.owedPrice - result.owedPrice * stripeAchPercentInput - paidUpFlatInput - stripeAchFlatInput) / (1 + paidUpFeeInput));        
+      } else {
+        result.basePrice = round((result.owedPrice - capAmount - paidUpFlatInput) / (1 + paidUpFeeInput));
+      }
     }
     else if (processing && !collect) {
-      result.basePrice = round(result.owedPrice - result.owedPrice * stripeAchPercentInput - stripeAchFlatInput);
+      if(result.owedPrice <= (capAmount / stripeAchPercentInput)){
+        result.basePrice = round(result.owedPrice - result.owedPrice * stripeAchPercentInput - stripeAchFlatInput);        
+      } else {
+        result.basePrice = round(result.owedPrice - capAmount - stripeAchFlatInput);
+      }
     }
 
     let tmpProcessing = round(result.owedPrice * stripeAchPercentInput + stripeAchFlatInput)
