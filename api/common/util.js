@@ -4,7 +4,7 @@
 'use strict'
 
 function round (num){
-  return parseFloat(num.toFixed(2))
+  return parseFloat((Math.round(100 * num.toFixed(4)) / 100).toFixed(2))
 }
 
 module.exports = {
