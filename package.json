@@ -15,7 +15,8 @@
   "author": "PaidUpTeam",
   "license": "PaidUp",
   "dependencies": {
-    "machine": "^10.0.0"
+    "machine": "^10.0.0",
+    "mathjs": "^3.8.0"
   },
   "devDependencies": {
     "test-machinepack-mocha": "^2.0.0"
