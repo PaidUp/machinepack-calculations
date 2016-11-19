@@ -48,7 +48,7 @@ function card(inputs, exits) {
     result.feeStripe = round(result.owedPrice * stripePercentInput + stripeFlatInput)
     result.feePaidUp = round(result.basePrice * paidUpFeeInput + paidUpFlatInput)
     result.totalFee = round(result.feeStripe + result.feePaidUp);
-
+    console.log(result)
     return exits.success(result);
   } catch (e) {
     return exits.error({ description: e })

@@ -3,96 +3,7 @@
   "expectations": [
     {
       "using": {
-        "originalPrice" : 105,
-        "stripePercent" : 2.9,
-        "stripeFlat" : 0.30,
-        "paidUpFee" : 5,
-        "discount" : 10,
-        "payProcessing" : false,
-        "payCollecting" : true
-      },
-      "outcome": "success",
-      "output": {
-        "version": "v2",
-        "basePrice": 90,
-        "owedPrice": 94.5,
-        "discount": 10.50,
-        "originalPrice": 105,
-        "totalFee": 8.54,
-        "feePaidUp": 4.50,
-        "feeStripe": 3.04}
-    },
-    {
-      "using": {
-        "originalPrice" : 100,
-        "stripePercent" : 2.9,
-        "stripeFlat" : 0.30,
-        "paidUpFee" : 5,
-        "discount" : 10,
-        "payProcessing" : false,
-        "payCollecting" : false
-      },
-      "outcome": "success",
-      "output": {
-        "version": "v2",
-        "basePrice": 90,
-        "owedPrice": 90,
-        "discount": 10,
-        "originalPrice": 100,
-        "totalFee": 7.41,
-        "feePaidUp": 4.5,
-        "feeStripe": 2.91
-      }
-    },
-    {
-      "using": {
-        "originalPrice" : 40,
-        "stripePercent" : 2.9,
-        "stripeFlat" : 0.30,
-        "paidUpFee" : 5,
-        "discount" : 10,
-        "payProcessing" : true,
-        "payCollecting" : true
-      },
-      "outcome": "success",
-      "output": {
-        "version": "v2",
-        "basePrice": 33,
-        "owedPrice": 36,
-        "discount": 4,
-        "originalPrice": 40,
-        "totalFee": 2.99,
-        "feePaidUp": 1.65,
-        "feeStripe": 1.34}
-    },
-    {
-      "using": {
-        "originalPrice" : 103.29,
-        "stripePercent" : 2.9,
-        "stripeFlat" : 0.30,
-        "paidUpFee" : 5,
-        "discount" : 10,
-        "payProcessing" : true,
-        "payCollecting" : false
-      },
-      "outcome": "success",
-      "output": {
-        "version": "v2",
-        "basePrice": 89.97,
-        "owedPrice": 92.96,
-        "discount": 10.33,
-        "originalPrice": 103.29,
-        "totalFee": 8.5,
-        "feePaidUp": 4.5,
-        "feeStripe": 3.0}
-    },
-
-
-
-
-    {
-      "using": {
-        "originalPrice" : 1050,
+        "originalPrice" : 500.75,
         "stripePercent" : 2.9,
         "stripeFlat" : 0.30,
         "paidUpFee" : 5,
@@ -103,88 +14,7 @@
         "stripeAchPercent": 0.8,
         "stripeAchFlat": 0,
         "paidUpFlat": 0,
-        "type": "bank_account"
-      },
-      "outcome": "success",
-      "output": {
-        "version": "v2",
-        "basePrice": 1000,
-        "owedPrice": 1050,
-        "discount": 0,
-        "originalPrice": 1050,
-        "totalFee": 55,
-        "feePaidUp": 50,
-        "feeStripe": 5}
-    },
-    {
-      "using": {
-        "originalPrice" : 1000,
-        "stripePercent" : 2.9,
-        "stripeFlat" : 0.30,
-        "paidUpFee" : 5,
-        "discount" : 0,
-        "payProcessing" : false,
-        "payCollecting" : false,
-        "capAmount": 5,
-        "stripeAchPercent": 0.8,
-        "stripeAchFlat": 0,
-        "paidUpFlat": 0,
-        "type": "bank_account"
-      },
-      "outcome": "success",
-      "output": {
-        "version": "v2",
-        "basePrice": 1000,
-        "owedPrice": 1000,
-        "discount": 0,
-        "originalPrice": 1000,
-        "totalFee": 55,
-        "feePaidUp": 50,
-        "feeStripe": 5}
-    },
-
-
-
-    {
-      "using": {
-        "originalPrice" : 1000,
-        "stripePercent" : 2.9,
-        "stripeFlat" : 0.30,
-        "paidUpFee" : 5,
-        "discount" : 0,
-        "payProcessing" : true,
-        "payCollecting" : true,
-        "capAmount": 5,
-        "stripeAchPercent": 0.8,
-        "stripeAchFlat": 0,
-        "paidUpFlat": 10,
-        "type": "bank_account"
-      },
-      "outcome": "success",
-      "output": {
-        "version": "v2",
-        "basePrice": 1000,
-        "owedPrice": 1000,
-        "discount": 0,
-        "originalPrice": 1000,
-        "totalFee": 55,
-        "feePaidUp": 50,
-        "feeStripe": 5}
-    },
-    {
-      "using": {
-        "originalPrice" : 1000,
-        "stripePercent" : 2.9,
-        "stripeFlat" : 0.30,
-        "paidUpFee" : 5,
-        "discount" : 0,
-        "payProcessing" : true,
-        "payCollecting" : false,
-        "capAmount": 5,
-        "stripeAchPercent": 0.8,
-        "stripeAchFlat": 0,
-        "paidUpFlat": 0,
-        "type": "bank_account"
+        "type": "card"
       },
       "outcome": "success",
       "output": {
@@ -192,7 +22,7 @@
         "basePrice": 992,
         "owedPrice": 1000,
         "discount": 0,
-        "originalPrice": 1000,
+        "originalPrice": 1000000,
         "totalFee": 54.6,
         "feePaidUp": 49.6,
         "feeStripe": 5}
