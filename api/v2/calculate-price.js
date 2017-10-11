@@ -9,7 +9,7 @@ function card(inputs, exits) {
 
   try {
     if(!inputs.originalPrice){
-      return {
+      return exits.success({
         version: 'v2',
         originalPrice: 0,
         totalFee: 0,
@@ -17,7 +17,7 @@ function card(inputs, exits) {
         feeStripe: 0,
         owedPrice: 0,
         discount: 0
-      }
+      });
     }
 
     let discountInput = inputs.discount / 100;
