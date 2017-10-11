@@ -8,6 +8,18 @@ var round = require('../common/util').round;
 function card(inputs, exits) {
 
   try {
+    if(!inputs.originalPrice){
+      return {
+        version: 'v2',
+        originalPrice: 0,
+        totalFee: 0,
+        feePaidUp: 0,
+        feeStripe: 0,
+        owedPrice: 0,
+        discount: 0
+      }
+    }
+
     let discountInput = inputs.discount / 100;
     let stripePercentInput = inputs.stripePercent / 100;
     let stripeFlatInput = inputs.stripeFlat;
